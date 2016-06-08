@@ -24,8 +24,8 @@ var server = app.listen(deployTarget, () => {
 
 
 /**
-	*	 Log into ETI using environment vars as credentials
-	*/
+  *	 Log into ETI using environment vars as credentials
+  */
 
 app.loginToBlueSite = function() {
 	const LOGIN_URL = "https://endoftheinter.net/";
@@ -61,8 +61,8 @@ app.loginToBlueSite = function() {
 
 
 /**
-	*	Fetches raw drama feed from wiki
-	*/
+  *	Fetches raw drama feed from wiki
+  */
 
 app.fetchDrama = function() {
 		const DRAMA_URL = "http://wiki.endoftheinter.net/index.php?title=Dramalinks/current&action=raw&section=0&maxage=30";
@@ -91,8 +91,8 @@ app.fetchDrama = function() {
 
 
 /**
-	*	Parse dramaticker url and convert into JSON format (as best as possible)
-	*/
+  *	Parse dramaticker url and convert into JSON format (as best as possible)
+  */
 	
 app.parseResponse = function(response) {
 	if (response !== "") {
@@ -157,8 +157,8 @@ app.parseResponse = function(response) {
 
 
 /**
-	*	Getter for /test route data
-	*/
+  *	Getter for /test route data
+  */
 
 app.getTestHtml = () => {
 		return "<div style=\"float: left; width:70%\" id=\"dramalinks-stories\">\
