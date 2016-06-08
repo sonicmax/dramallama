@@ -48,7 +48,7 @@ app.loginToBlueSite = function() {
 				}
 				
 				else {			
-					app.cookieJar.setCookie("userid=5599");															
+					app.cookieJar.setCookie("userid=" + process.env.USER_ID);
 					app.fetchDrama();
 				}
 			}
