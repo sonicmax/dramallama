@@ -6,9 +6,9 @@ A simple JSON API for the dramalinks ticker on ETI, written using node. Deploy u
 
 **Required environment vars:**
 	
-	`USERNAME`: your username		
-	`PASSWORD`: your password	
-	`USER_ID`: your user id
+	USERNAME: your username		
+	PASSWORD: your password	
+	USER_ID: your user id
 
 **Sample response:**
 
