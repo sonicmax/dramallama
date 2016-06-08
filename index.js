@@ -12,14 +12,14 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.cookieJar = request.jar(); // Global cookie store
-app.cachedDrama = { "code": "", "stories": [] };
+app.cachedDrama = { "code": "", "stories": [] }; // Basic format for JSON response
  
 var routes = require("./routes/routes.js")(app);
 
 var deployTarget = process.env.PORT || 3000;
 
-var server = app.listen(deployTarget, function() {	
-		app.loginToBlueSite();
+var server = app.listen(deployTarget, () => {
+	app.loginToBlueSite();
 });
 
 
@@ -29,18 +29,16 @@ var server = app.listen(deployTarget, function() {
 
 app.loginToBlueSite = function() {
 	const LOGIN_URL = "https://endoftheinter.net/";
-	const formdata = { b: process.env.USERNAME, p: process.env.PASSWORD };
+	const formData = { b: process.env.USERNAME, p: process.env.PASSWORD };
 	
 	request.post({
 		
 		headers: {"content-type": "application/x-www-form-urlencoded"},
 		url: LOGIN_URL,
-		form: formdata,
+		form: formData,
 		jar: app.cookieJar
 		
 	}, (error, response, body) => {
-		
-			console.log(response.headers["location"]);
 				
 			// After successful login, ETI will attempt to redirect you to homepage
 			if (!error && response.statusCode === 302) {
@@ -111,8 +109,9 @@ app.parseResponse = function(response) {
 		drama = drama.filter(line => (line.indexOf("<div") == -1));
 		drama = drama.filter(line => (line.indexOf("</div>") == -1));
 		drama = drama.filter(line => (line.indexOf("{{") == -1));
-		
-		// Scrape URLs from each drama ticker entry
+				
+		// To find URLs we can use simpleUrlRegex to find content wrapped in single square brackets,
+		// then check that they metch the urlValidation regex to be sure. The second step is probably unnecessary
 		var simpleUrlRegex =/(?:^|[^[\])\{([^[\]]*)(?=\](?!\]))/g;
 		var urlValidation = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 		
@@ -127,7 +126,7 @@ app.parseResponse = function(response) {
 					var tempUrlsArray = [];
 					
 					for (var j = 0, len = urls.length; j < len; j++) {
-						var url = urls[j];
+						var url = urls[j];						
 						if (url.match(urlValidation)) {
 							story = story.replace("[" + url + "]", "").trim();
 							tempUrlsArray.push(url);
@@ -157,7 +156,7 @@ app.parseResponse = function(response) {
 
 
 /**
-	*	Test data
+	*	Getter for /test route data
 	*/
 
 app.getTestHtml = () => {
