@@ -4,13 +4,13 @@ http://dramallama.herokuapp.com/
 
 A simple JSON API for the dramalinks ticker on ETI, written using node. Deploy using Heroku.
 
-Required environment vars:
+**Required environment vars:**
+	
+	`USERNAME: your username		
+	`PASSWORD: your password	
+	`USER_ID: your user id
 
-	<pre>USERNAME:</pre> your username
-	<pre>PASSWORD:</pre> your password
-	<pre>USER_ID:</pre> your user id
-
-Sample response:
+**Sample response:**
 
 <pre>{
 	"code": "orange",
