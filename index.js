@@ -129,6 +129,7 @@ app.parseResponse = function(response) {
 						var url = urls[j];						
 						if (url.match(urlValidation)) {
 							story = story.replace("[" + url + "]", "").trim();
+							story = story.replace("&nbsp;&nbsp;", "&nbsp;");
 							tempUrlsArray.push(url);
 						}
 					}
