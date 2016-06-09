@@ -26,6 +26,9 @@ var server = app.listen(deployTarget, () => {
 
 	setTimeout(() => {
 		
+		// TODO: refactor this so we can call these methods immediately 
+		// (otherwise app will display error page for 10 mins, as return value is delayed)
+		
 		if (app.loggedIn) {
 			console.log("Logged in - fetching drama");
 			app.fetchDrama();
