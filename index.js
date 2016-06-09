@@ -14,6 +14,7 @@ var request = require('request')
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.loggedIn = false;
 app.cookieJar = request.jar(); // Global cookie store
 app.cachedDrama = { "code": "", "stories": [] }; // Basic format for JSON response
  
@@ -22,7 +23,21 @@ var routes = require("./routes/routes.js")(app);
 var deployTarget = process.env.PORT || 3000;
 
 var server = app.listen(deployTarget, () => {
-	app.loginToBlueSite();
+
+	setTimeout(() => {
+		
+		if (app.loggedIn) {
+			console.log("Logged in - fetching drama");
+			app.fetchDrama();
+		}
+		
+		else {
+			console.log("Logging in, and then fetching drama");
+			app.loginToBlueSite();
+		}
+		
+	}, TEN_MINUTES);
+	
 });
 
 
@@ -52,6 +67,7 @@ app.loginToBlueSite = function() {
 				
 				else {			
 					app.cookieJar.setCookie("userid=" + process.env.USER_ID);
+					app.loggedIn = true;
 					app.fetchDrama();
 				}
 			}
