@@ -2,6 +2,9 @@
 /*
  *	Initial setup
  */
+
+const FIVE_MINUTES = 300000;
+const TEN_MINUTES = 600000;
  
 var fs = require("fs");
 var express = require("express");
@@ -66,7 +69,6 @@ app.loginToBlueSite = function() {
 
 app.fetchDrama = function() {
 		const DRAMA_URL = "http://wiki.endoftheinter.net/index.php?title=Dramalinks/current&action=raw&section=0&maxage=30";
-		const TEN_MINUTES = 600000;
 
 		// Get raw drama feed from wiki
 		request.get({
@@ -126,12 +128,16 @@ app.parseResponse = function(response) {
 					var tempUrlsArray = [];
 					
 					for (var j = 0, len = urls.length; j < len; j++) {
-						var url = urls[j];						
+						var url = urls[j];	
+						
 						if (url.match(urlValidation)) {
 							story = story.replace("[" + url + "]", "").trim();
 							story = story.replace("  ", " ");
 							tempUrlsArray.push(url);
 						}
+						
+						// Usernames are wrapped in double square brackets - we should remove them
+						story = story.replace(/\[{2}|\]{2}/g, "");
 					}
 				}
 				
@@ -139,6 +145,7 @@ app.parseResponse = function(response) {
 						title: story,
 						urls:	tempUrlsArray
 				});
+				
 			}
 		}
 		
