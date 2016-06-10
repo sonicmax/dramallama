@@ -23,12 +23,10 @@ var routes = require("./routes/routes.js")(app);
 var deployTarget = process.env.PORT || 3000;
 
 var server = app.listen(deployTarget, () => {
+	setTimeout(app.checkLoginStatus, TEN_MINUTES);
+});
 
-	setTimeout(() => {
-		
-		// TODO: refactor this so we can call these methods immediately 
-		// (otherwise app will display error page for 10 mins, as return value is delayed)
-		
+app.checkLoginStatus = function() {
 		if (app.loggedIn) {
 			console.log("Logged in - fetching drama");
 			app.fetchDrama();
@@ -38,11 +36,7 @@ var server = app.listen(deployTarget, () => {
 			console.log("Logging in, and then fetching drama");
 			app.loginToBlueSite();
 		}
-		
-	}, TEN_MINUTES);
-	
-});
-
+};
 
 /**
   *	 Log into ETI using environment vars as credentials
