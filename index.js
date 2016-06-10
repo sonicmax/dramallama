@@ -24,7 +24,13 @@ var routes = require("./routes/routes.js")(app);
 var deployTarget = process.env.PORT || LOCAL_HOST;
 
 var server = app.listen(deployTarget, () => {
-	setTimeout(app.checkLoginStatus, TEN_MINUTES);
+	if (loggedIn) {
+		// We already have cached drama
+		setTimeout(app.checkLoginStatus, TEN_MINUTES);	
+	}
+	else {
+		app.loginToBlueSite();
+	}
 });
 
 app.checkLoginStatus = function() {
