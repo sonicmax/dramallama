@@ -154,11 +154,7 @@ app.parseResponse = function(response) {
 					}
 				}
 				
-				stories.push({
-						title: story,
-						urls:	tempUrlsArray
-				});
-				
+				stories.push({ title: story, urls: tempUrlsArray };				
 			}
 		}
 		
