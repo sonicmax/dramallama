@@ -3,6 +3,7 @@
  *	Initial setup
  */
 
+const LOCAL_HOST = 3000;
 const FIVE_MINUTES = 300000;
 const TEN_MINUTES = 600000;
  
@@ -20,7 +21,7 @@ app.cachedDrama = { "code": "", "stories": [] }; // Basic format for JSON respon
  
 var routes = require("./routes/routes.js")(app);
 
-var deployTarget = process.env.PORT || 3000;
+var deployTarget = process.env.PORT || LOCAL_HOST;
 
 var server = app.listen(deployTarget, () => {
 	setTimeout(app.checkLoginStatus, TEN_MINUTES);
