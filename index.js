@@ -24,7 +24,7 @@ var routes = require("./routes/routes.js")(app);
 var deployTarget = process.env.PORT || LOCAL_HOST;
 
 var server = app.listen(deployTarget, () => {
-	if (loggedIn) {
+	if (app.loggedIn) {
 		// We already have cached drama
 		setTimeout(app.checkLoginStatus, TEN_MINUTES);	
 	}
